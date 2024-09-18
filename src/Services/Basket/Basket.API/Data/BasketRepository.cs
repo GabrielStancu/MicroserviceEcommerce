@@ -2,18 +2,32 @@
 
 public class BasketRepository : IBasketRepository
 {
-    public Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellationToken = default)
+    private readonly IDocumentSession _session;
+
+    public BasketRepository(IDocumentSession session)
     {
-        throw new NotImplementedException();
+        _session = session;
     }
 
-    public Task<ShoppingCart> StoreBasket(ShoppingCart basket, CancellationToken cancellationToken = default)
+    public async Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var basket = await _session.LoadAsync<ShoppingCart>(userName, cancellationToken);
+
+        return basket ?? throw new BasketNotFoundException(userName);
     }
 
-    public Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
+    public async Task<ShoppingCart> StoreBasket(ShoppingCart basket, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _session.Store(basket);
+        await _session.SaveChangesAsync(cancellationToken);
+
+        return basket;
+    }
+
+    public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
+    {
+        _session.Delete<ShoppingCart>(userName);
+        await _session.SaveChangesAsync(cancellationToken);
+        return true;
     }
 }
