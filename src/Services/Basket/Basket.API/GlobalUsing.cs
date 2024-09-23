@@ -6,6 +6,7 @@ global using Carter;
 global using Core.Behaviors;
 global using Core.CQRS;
 global using Core.Exceptions;
+global using Core.Exceptions.Handler;
 global using FluentValidation;
 global using Mapster;
 global using Marten;
