@@ -1,11 +1,11 @@
 ﻿namespace Ordering.Domain.Models;
 
-public class Order : Aggregate<Guid>
+public class Order : Aggregate<OrderId>
 {
     private readonly List<OrderItem> _orderItems = new();
     public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
-    public Guid CustomerId { get; set; } = default!;
-    public string OrderName => default!;
+    public CustomerId CustomerId { get; set; } = default!;
+    public OrderName OrderName => default!;
     public Address ShippingAddress => default!;
     public Address BillingAddress => default!;
     public Payment Payment => default!;
