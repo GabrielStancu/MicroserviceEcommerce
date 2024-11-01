@@ -2,6 +2,21 @@
 
 public class Product : Entity<ProductId>
 {
-    public string Name => default!;
-    public decimal Price => default!;
+    public string Name { get; private init; } = default!;
+    public decimal Price { get; private init; }
+
+    public static Product Create(ProductId id, string name, decimal price)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+        var product = new Product
+        {
+            Id = id,
+            Name = name,
+            Price = price
+        };
+
+        return product;
+    }
 }
