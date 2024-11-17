@@ -14,7 +14,7 @@ builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-app.UseAPiServices();
+app.UseApiServices();
 
 if (app.Environment.IsDevelopment())
 {
