@@ -4,11 +4,11 @@ using Ordering.Application.Dtos;
 
 namespace Ordering.Application.Orders.Commands.CreateOrder;
 
-public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand, CreateOrderResult>
+public class CreateOrderHandler : ICommandHandler<CreateOrderCommand, CreateOrderResult>
 {
     private readonly IApplicationDbContext _dbContext;
 
-    public CreateOrderCommandHandler(IApplicationDbContext dbContext)
+    public CreateOrderHandler(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
