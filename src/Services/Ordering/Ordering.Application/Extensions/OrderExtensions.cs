@@ -4,7 +4,17 @@ public static class OrderExtensions
 {
     public static IEnumerable<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
     {
-        return orders.Select(order => new OrderDto(
+        return orders.Select(OrderDtoFromOrder);
+    }
+
+    public static OrderDto ToOrderDto(this Order order)
+    {
+        return OrderDtoFromOrder(order);
+    }
+
+    private static OrderDto OrderDtoFromOrder(Order order)
+    {
+        return new OrderDto(
             order.Id.Value,
             order.CustomerId.Value,
             order.OrderName.Value,
@@ -35,6 +45,6 @@ public static class OrderExtensions
                 oi.OrderId.Value,
                 oi.ProductId.Value,
                 oi.Quantity,
-                oi.Price)).ToList()));
+                oi.Price)).ToList());
     }
 }
