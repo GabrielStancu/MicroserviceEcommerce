@@ -1,8 +1,4 @@
-﻿using Core.CQRS;
-using Ordering.Application.Data;
-using Ordering.Application.Dtos;
-
-namespace Ordering.Application.Orders.Commands.CreateOrder;
+﻿namespace Ordering.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderHandler : ICommandHandler<CreateOrderCommand, CreateOrderResult>
 {
@@ -16,6 +12,8 @@ public class CreateOrderHandler : ICommandHandler<CreateOrderCommand, CreateOrde
     public async Task<CreateOrderResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
         var order = CreateNewOrder(command.Order);
+
+        _dbContext.Orders.Add(order);
         await _dbContext.SaveChangesAsync(cancellationToken);
         
         return new CreateOrderResult(order.Id.Value);
